@@ -1,8 +1,8 @@
-# Refs Rails
+# Refs (for Rails)
 
 A Rails gem for managing string identifiers in a centralized, type-safe way. Good for form IDs, CSS classes, data attributes, and any other string constants you want to keep organized.
 
-## Why Refs Rails?
+## Why Refs?
 
 Instead of scattering magic strings throughout your Rails application:
 
