@@ -10,8 +10,4 @@ class Refs
   def self.instance
     @instance ||= new
   end
-
-  def self.reset!
-    @instance = nil
-  end
 end

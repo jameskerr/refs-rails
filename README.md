@@ -1,13 +1,18 @@
-# Refs (for Rails)
+# Refs
 
-A Rails gem for managing string identifiers in a centralized, type-safe way. Good for form IDs, CSS classes, data attributes, and any other string constants you want to keep organized.
+The standard way to dynamically update HTML content in Ruby on Rails relies heavily on DOM IDs. Managing these IDs can be cumbersome, verbose, and error-prone.
 
-## Why Refs?
+This very small library gives you a central place to define IDs and a helper object to access them in views and controllers.
 
-Instead of scattering magic strings throughout your Rails application:
+Instead of scattering magic strings throughout your Rails application, define them once and reference them safely in Ruby.
+
+Read the motivation behind the gem here: [DOM IDs are a real pain in my apps](https://www.jameskerr.blog/posts/2025/refs-rails/)
+
+## Why?
+
+Here's a very simple example of replacing content on the page with a turbo stream. As you can see, you need these two string IDs to remain in sync.
 
 ```erb
-<!-- Scattered magic strings -->
 <form id="user-settings-form"></form>
 ```
 
@@ -15,14 +20,12 @@ Instead of scattering magic strings throughout your Rails application:
 turbo_stream.replace "user-settings-form"
 ```
 
-Define them once and reference them everywhere:
+Here's how you'd do it with refs. First, define the ref in `config/refs.rb`, the call the helper method on the `ref` object in views and controllers.
 
 ```ruby
 # config/refs.rb
 Refs.define do
   ref :user_settings_form
-  ref :user_settings_panel
-  ref :user_settings_email_input
 end
 ```
 
@@ -33,6 +36,8 @@ end
 ```rb
 turbo_stream.replace ref.user_settings_form
 ```
+
+Instead of catching the error in JavaScript during a click test, you'll catch it when the template renders.
 
 ## Installation
 
@@ -69,17 +74,6 @@ Each ref you define is turned into a method on the `ref` object and automaticall
 ```rb
 render turbo_stream: turbo_stream.replace ref.login_form
 ```
-
-## Benefits
-
-This library helps centralize all your DOM ids, which are frequently needed in a default Rails app with a hotwire frontend. It will help you find your bugs faster with method errors when the template renders, rather than JavaScript errors when you are click-testing.
-
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
